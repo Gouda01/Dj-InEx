@@ -3,7 +3,6 @@
 
 {% block css %}
     <style>
-      
        .bg {
         /* The image used */
         background-image: url("{% static 'custom/register-bg.jpg' %}");
@@ -20,7 +19,7 @@
 {% endblock css %}
 
 {% block content %}
-<div class="card-body">
+<div class="card-body" style="background-color: #e4e4e2;">
     <p class="login-box-msg">Register a new membership</p>
 
     <form action="" method="post">
@@ -28,12 +27,14 @@
       <div class="mb-2">
         <label for="exampleFormControlInput1" class="form-label">Username</label>
         <input type="text" class="form-control" id="usernameField" placeholder="Username">
-        <div class="error invalid-feedback"></div>
+        <div class="error invalid_feedback invalid-feedback"></div>
+        <div class="text-success usernameSuccessOutput"></div>
       </div>
 
       <div class="mb-2">
         <label for="exampleFormControlInput1" class="form-label">Email address</label>
         <input type="email" class="form-control" id="emailField" placeholder="Email">
+        <div class="error emailFeedbackArea invalid-feedback"></div>
       </div>
 
       <div class="mb-2">
