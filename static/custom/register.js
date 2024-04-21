@@ -6,6 +6,8 @@ const emailFeedbackArea=document.querySelector('.emailFeedbackArea')
 
 const usernameSuccessOutput=document.querySelector('.usernameSuccessOutput')
 
+const submitBtn = document.querySelector('.submit-btn')
+
 
 emailField.addEventListener("keyup", (e) => {
     const emailVal = e.target.value;
@@ -21,9 +23,12 @@ emailField.addEventListener("keyup", (e) => {
     .then(res=>res.json())
     .then((data) => {
         if (data.email_error){
+            submitBtn.disabled = true;
             emailField.classList.add("is-invalid");
             emailFeedbackArea.computedStyleMap.display="block";
             emailFeedbackArea.innerHTML=`<p>${data.email_error}</p>`;
+        }else {
+            submitBtn.removeAttribute("disabled");
         }
     });
     }
@@ -49,9 +54,12 @@ usernameField.addEventListener("keyup", (e) => {
     .then((data) => {
         usernameSuccessOutput.style.display = "none";
         if (data.username_error){
+            submitBtn.disabled = true;
             usernameField.classList.add("is-invalid");
             feedbackArea.computedStyleMap.display="block";
             feedbackArea.innerHTML=`<p>${data.username_error}</p>`;
+        }else {
+            submitBtn.removeAttribute("disabled");
         }
     });
     }

@@ -45,9 +45,28 @@ class RegistrationView(View):
     
     def post(self, request):
 
-        messages.success(request, 'Success Whatsapp success')
-        messages.warning(request, 'Success Whatsapp warning')
-        messages.info(request, 'Success Whatsapp info')
-        messages.error(request, 'Success Whatsapp error')
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
 
+        context = {
+            'fieldValues' : request.POST
+        }
+
+        if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
+                if password1 != password2 or len(password1) < 6 or len(password2) < 6 :
+                    messages.error(request,'Passwords not the same or too short')
+                    return render (request,'authentication/register.html', context)
+                
+                user = User.objects.create_user(
+                    username=username,
+                    email=email,
+                )
+                user.set_password(password1)
+                user.save()
+                messages.success(request,'Account Created successfully ...')
+                return render (request,'authentication/register.html')
+            
         return render (request,'authentication/register.html')
