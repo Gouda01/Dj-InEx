@@ -1,6 +1,23 @@
 {% extends 'base_auth.html' %}
 {% load static %}
 
+{% block css %}
+    <style>
+      
+       .bg {
+        /* The image used */
+        background-image: url("{% static 'custom/register-bg.jpg' %}");
+      
+        /* Full height */
+        height: 100%;
+      
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+{% endblock css %}
 
 {% block content %}
 <div class="card-body">
