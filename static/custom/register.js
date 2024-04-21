@@ -32,13 +32,15 @@ emailField.addEventListener("keyup", (e) => {
 usernameField.addEventListener("keyup", (e) => {
     const usernameVal = e.target.value;
 
-    usernameSuccessOutput.style.display = "block";
-    usernameSuccessOutput.textContent = `Checking ${usernameVal}`;
+    
+    
 
     usernameField.classList.remove("is-invalid");
     feedbackArea.computedStyleMap.display="none";
 
     if(usernameVal.length>0){
+        usernameSuccessOutput.style.display = "block";
+        usernameSuccessOutput.textContent = `Checking ${usernameVal}`;
         fetch("/authentication/validate-username", {
         body: JSON.stringify({username:usernameVal}),
         method:"POST",

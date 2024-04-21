@@ -1,0 +1,17 @@
+{% load static %}
+
+
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+  <!-- SweetAlert2 -->
+  <script src="{% static 'en/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
+  <!-- Toastr -->
+  <script src="{% static 'en/plugins/toastr/toastr.min.js' %}"></script>

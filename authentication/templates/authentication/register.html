@@ -16,13 +16,20 @@
         background-size: cover;
       }
     </style>
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{% static 'en/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{% static 'en/plugins/toastr/toastr.min.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="card-body" style="background-color: #e4e4e2;">
     <p class="login-box-msg">Register a new membership</p>
 
-    <form action="" method="post">
+    {% include 'partials/messages.html' %}
+    
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
       
       <div class="mb-2">
         <label for="exampleFormControlInput1" class="form-label">Username</label>
