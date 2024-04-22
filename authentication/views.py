@@ -7,7 +7,7 @@ from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import send_mail
 
-from django.utils.encoding import force_bytes, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes,force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
@@ -71,9 +71,9 @@ class RegistrationView(View):
                 user = User.objects.create_user(
                     username=username,
                     email=email,
+                    is_active=False,
                 )
                 user.set_password(password1)
-                user.set_active = False
                 user.save()
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
                 
@@ -83,7 +83,7 @@ class RegistrationView(View):
 
                 #send email
                 email_subject = 'Activate your account'
-                email_body = 'Hi '+ user.username + ' Please use this link to verify your account\n' + activate_url
+                email_body = 'Hi '+ user.username + '\nPlease use this link to verify your account\n' + activate_url
 
                 send_mail(
                     email_subject,
@@ -100,8 +100,29 @@ class RegistrationView(View):
     
 class VerificationView(View):
     def get(self, request, uidb64, token):
+
+        try:
+            id = force_str(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(pk=id)
+
+            if not token_generator.check_token(user,token):
+                return redirect('login'+'?message='+'User already activated')
+
+            if user.is_active:
+                messages.success(request, 'User already activated')
+                return redirect('login')
+                
+
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated successfuly')
+            return redirect('login')
+
+        except Exception as ex:
+            pass
         return redirect('login')
     
 class LoginView(View):
-    def get(self, request, uidb64, token):
+    def get(self, request):
         return render(request, 'authentication/login.html')
