@@ -25,24 +25,22 @@
 {% endblock css %}
 
 {% block content %}
-<div class="card-body" style="background-color: #cbf0ff;">
+<div class="card-body" style="background-color: #e4e4e2;">
     <p class="login-box-msg">Sign in to start your session</p>
 
     {% include 'partials/messages.html' %}
     
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
       
       <div class="mb-2">
         <label for="exampleFormControlInput1" class="form-label">Username</label>
         <input type="text" class="form-control" id="usernameField" placeholder="Username" name="username">
-        <div class="error invalid_feedback invalid-feedback"></div>
-        <div class="text-success usernameSuccessOutput"></div>
       </div>
 
       <div class="mb-2">
         <label for="exampleFormControlInput1" class="form-label" >Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="password1">
+        <input type="password" class="form-control" placeholder="Password" name="password">
       </div>
 
 
