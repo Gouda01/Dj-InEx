@@ -25,5 +25,6 @@ urlpatterns = [
     path('',index, name='home'),
 
     path('authentication/', include('authentication.urls')),
+    path('preferences/', include('userpreferences.urls')),
 
 ]

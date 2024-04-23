@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Perefered Currency {% endblock title %}
+
+{% block css %}
+    
+{% endblock css %}
+    
+
+
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        
+
+        <!-- Main content -->
+        <section class="content py-3">
+
+            <!-- Default box -->
+            <div class="card card-row card-primary">
+                <div class="card-header">
+                <h3 class="card-title">
+                    Perefered Currency
+                </h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label for="exampleSelectRounded0">Currency :</label>
+                        <select class="custom-select rounded-0" id="exampleSelectRounded0">
+                            <option selected > Choose Currency ...</option>
+                            {% for currency in currencies %}
+                                <option>{{ currency.name }} - {{ currency.value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-info">Sign in</button>
+                
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+{% endblock content %}
+
+
+
+{% block js %}
+    
+{% endblock js %}
+    
+    
