@@ -67,6 +67,7 @@
         </div>
       </li>
 
+      {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <div class="user-panel">
@@ -74,7 +75,10 @@
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-          
+          <a href="#" class="dropdown-item">
+            {{ user.get_username }}
+          </a>
+
           <a href="#" class="dropdown-item">
             <i class="fas fa-user mr-2"></i> Profile
           </a>
@@ -89,6 +93,7 @@
               </form>
         </div>
       </li>
+      {% endif %}
 
 
       

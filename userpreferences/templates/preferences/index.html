@@ -25,17 +25,19 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="form-group">
-                        <label for="exampleSelectRounded0">Currency :</label>
-                        <select class="custom-select rounded-0" id="exampleSelectRounded0">
-                            <option selected > Choose Currency ...</option>
-                            {% for currency in currencies %}
-                                <option>{{ currency.name }} - {{ currency.value }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-info">Sign in</button>
-                
+                    <form action="{% url 'preferences' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="exampleSelectRounded0">Currency :</label>
+                            <select class="custom-select rounded-0" id="exampleSelectRounded0" name="currency">
+                                <option selected > Choose Currency ...</option>
+                                {% for currency in currencies %}
+                                    <option value="{{ currency.name }} - {{ currency.value }}" >{{ currency.name }} - {{ currency.value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info">Save</button>
+                    </form>
                 </div>
             </div>
             <!-- /.card -->

@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="{% static 'en/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'en/dist/css/adminlte.min.css' %}">
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{% static 'en/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{% static 'en/plugins/toastr/toastr.min.css' %}">
   
   {% block css %}{% endblock css %}
     
@@ -24,6 +29,8 @@
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{% static 'en/dist/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
   </div>
+
+  {% include 'partials/messages.html' %}
 
   {% include 'partials/navbar.html' %}
 
