@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # My Apps :
     'expenses',
     'authentication',
+    'userpreferences',
 ]
 
 MIDDLEWARE = [
@@ -142,9 +143,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-MESSAGE_TAGS={
-    messages.ERROR : 'danger'
-}
+# MESSAGE_TAGS={
+#     messages.ERROR : 'danger'
+# }
 
 # Initialise environment variables
 env = environ.Env()

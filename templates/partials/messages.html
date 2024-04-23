@@ -5,11 +5,22 @@
 {% if messages %}
 <div class="messages">
     {% for message in messages %}
-    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+
+    <script>
+      window.onload = (function() {
+    
+          Swal.fire({
+            icon: "{{message.tags}}",
+            title: "{{message}}",
+            showConfirmButton: false,
+            timer: 2000
+          });
+      });
+    </script>
+
     {% endfor %}
 </div>
 {% endif %}
-
 
   <!-- SweetAlert2 -->
   <script src="{% static 'en/plugins/sweetalert2/sweetalert2.min.js' %}"></script>
