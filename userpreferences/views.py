@@ -3,11 +3,13 @@ import os
 import json
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import UserPreferences
 
 
 # Create your views here.
+@login_required(login_url='/authentication/login/')
 def index (request):
 
     currency_data = []
