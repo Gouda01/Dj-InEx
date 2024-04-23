@@ -31,6 +31,9 @@
                             <label for="exampleSelectRounded0">Currency :</label>
                             <select class="custom-select rounded-0" id="exampleSelectRounded0" name="currency">
                                 <option selected > Choose Currency ...</option>
+                                {% if user_perferences.currency %}
+                                    <option value="{{ user_perferences.currency }}" selected >{{ user_perferences.currency }}</option>
+                                {% endif %}
                                 {% for currency in currencies %}
                                     <option value="{{ currency.name }} - {{ currency.value }}" >{{ currency.name }} - {{ currency.value }}</option>
                                 {% endfor %}
