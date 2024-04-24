@@ -49,10 +49,11 @@ def add_expense (request):
             description = description,
             category = category,
             date = date,
+            owner = request.user,
         )
 
         messages.success(request, 'Expense Saved')
-        return render(request,'expenses/add_expense.html',context)
+        return render(request,'expenses/expense.html',context)
 
     
     return render(request,'expenses/add_expense.html',context)
