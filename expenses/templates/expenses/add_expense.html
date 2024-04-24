@@ -3,7 +3,8 @@
 {% block title %} Add expense {% endblock title %}
 
 {% block css %}
-    
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{% static 'en/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
 {% endblock css %}
     
 
@@ -19,29 +20,53 @@
             <div class="card card-row card-primary">
                 <div class="card-header">
                 <h3 class="card-title">
-                    Add expense
+                   <a href="{% url 'expenses' %}"><strong>Expenses</strong></a> / <span>Add expense</span>
                 </h3>
                 </div>
                 <div class="card-body">
                 
+                    <form action="" method="post">
+                        {% csrf_token %}
 
-                    <form>
                         <div class="card-body">
-                          <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                          </div>
-                          <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                          </div>
-                          
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="text" class="form-control" name="amount" placeholder="Amount">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" name="description" placeholder="Description">
+                            </div>
+
+                            <div class="form-group">
+                                <label >Category :</label>
+                                <select class="custom-select rounded-0" name="category">
+                                    <option selected  disabled> Choose Category ...</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category }}" >{{ category }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date of expense</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="expense_date" value="{% now 'd/m/Y' %}">
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            
                         </div>
                         <!-- /.card-body -->
         
                         
                     </form>
-                    
+
                 </div>
             </div>
             <!-- /.card -->
@@ -53,7 +78,47 @@
 {% endblock content %}
 
 {% block js %}
+
+<!-- Select2 -->
+<script src="{% static 'en/plugins/select2/js/select2.full.min.js' %}"></script>
+
+<!-- InputMask -->
+<script src="{% static 'en/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'en/plugins/inputmask/jquery.inputmask.min.js' %}"></script>
+
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'en/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+<!-- Page specific script -->
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+   
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'DD/MM/YYYY',
+    });
+
     
+
+  })
+  
+</script>
+
 {% endblock js %}
     
     
