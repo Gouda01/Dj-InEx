@@ -25,6 +25,7 @@ urlpatterns = [
     path('',index, name='home'),
 
     path('authentication/', include('authentication.urls')),
+    path('expenses/', include('expenses.urls')),
     path('preferences/', include('userpreferences.urls')),
 
 ]
