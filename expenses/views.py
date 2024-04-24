@@ -53,7 +53,7 @@ def add_expense (request):
         )
 
         messages.success(request, 'Expense Saved')
-        return render(request,'expenses/expense.html',context)
+        return render(request,'expenses/index.html',context)
 
     
     return render(request,'expenses/add_expense.html',context)
