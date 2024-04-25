@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_bootstrap5 %}
 {% block title %} Add expense {% endblock title %}
 
 {% block css %}
-   
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{% static 'en/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
 {% endblock css %}
     
 
@@ -29,33 +29,37 @@
                         {% csrf_token %}
 
                         <div class="card-body">
-                            
                             <div class="form-group">
                                 <label>Amount</label>
-                                {{form.amount}}
+                                <input type="text" class="form-control" name="amount" placeholder="Amount" value="{{ values.amount }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Description</label>
-                                {{form.description}}
+                                <input type="text" class="form-control" name="description" placeholder="Description" value="{{ values.description }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label >Category :</label>
-                                {{form.category}}
+                                <select class="custom-select rounded-0" name="category" value="{{ values.category }}"  required>
+                                    <option selected  disabled> Choose Category ...</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category }}" >{{ category }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Date of expense</label>
                                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                    {{form.date}}
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{% now 'Y/m/d' %}" required>
                                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
 
-                            {% bootstrap_button button_type="submit" content="Save" %}
+                            <button class="btn btn-primary" type="submit">Save</button>
                             
                         </div>
                         <!-- /.card-body -->
@@ -72,7 +76,7 @@
     </div>
     <!-- /.content-wrapper -->
 {% endblock content %}
-    
+
 {% block js %}
 
 <!-- Select2 -->
