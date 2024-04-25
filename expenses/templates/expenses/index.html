@@ -35,7 +35,7 @@
                                     <th>Description</th>
                                     <th>Category</th>
                                     <th>Date</th>
-                                    <th style="width: 10%"></th>
+                                    <th style="width: 8%"></th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -48,8 +48,14 @@
                                     <td>{{ expense.category }}</td>
                                     <td>{{ expense.date |date:"m/d/Y" }}</td>
                                     <td>
-                                        <a href="{% url 'edit_expense' %}"><button class="btn btn-primary btn-xs">Edit</button></a>
-                                        <a href="{% url 'delete_expense' %}"><button class="btn btn-danger btn-xs">Delete</button></a>
+                                        <a href="/expenses/edit_expense/{{ expense.pk }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-xs" 
+                                            data-pk="{{ expense.pk }}"
+                                            data-amount="{{ expense.amount }}"
+                                            data-category="{{ expense.category }}"
+                                            data-toggle="modal" 
+                                            data-target="#delete-expense"><i class="fas fa-trash"></i></a>
+                                        
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -63,9 +69,55 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <div class="modal fade" id="delete-expense">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Expense</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{% url 'delete_expense' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <h5 class="text-danger">Are you sure you want Delete expense :</h5>
+                        
+                            <input type="text" class="form-control" id="amount" disabled>
+                            <input type="hidden" class="form-control" id="pk" name="pk">
+                        
+                        
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete amount</button>
+                    </div>
+                </form>
+            </div>
+        <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 {% endblock content %}
 
 {% block js %}
+
+<script>
+    $('#delete-expense').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var pk = button.data('pk')
+        var amount = button.data('amount')
+        var category = button.data('category')
+        var modal = $(this)
+        modal.find('.modal-body #pk').val(pk);
+        modal.find('.modal-body #amount').val(category + '  -  ' + amount);
+    })
+
+</script>
     
 {% endblock js %}
     

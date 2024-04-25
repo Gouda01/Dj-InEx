@@ -68,21 +68,18 @@ def index (request):
 @login_required(login_url='/authentication/login/')
 def add_expense (request):
 
-    categories = Category.objects.all()
-    
-
     if request.method =='POST' :
         form = ExpensesForm(request.POST)
         if form.is_valid :
             myform=form.save(commit=False)
             myform.owner = request.user
             myform.save()
+            messages.success(request, 'Expense Succesfully Saved')
             return redirect ('/expenses/')
     else :
         form = ExpensesForm()
         
     context = {
-        'categories':categories,
         'form':form,
         'values' : request.POST,
     }
@@ -92,31 +89,34 @@ def add_expense (request):
     
 
 @login_required(login_url='/authentication/login/')
-def edit_expense (request):
+def edit_expense (request,pk):
 
-    categories = Category.objects.all()
-    
+    expense = Expense.objects.get(id=pk)
 
-    if request.method =='POST' :
-        form = ExpensesForm(request.POST)
-        if form.is_valid :
-            myform=form.save(commit=False)
+    if request.method == 'POST' :
+        form = ExpensesForm(request.POST,instance=expense)
+        if form.is_valid() :
+            myform = form.save(commit=False)
             myform.owner = request.user
             myform.save()
+            messages.success(request, 'Expense Succesfully Edited')
             return redirect ('/expenses/')
     else :
-        form = ExpensesForm()
-        
-    context = {
-        'categories':categories,
-        'form':form,
-        'values' : request.POST,
-    }
+        form = ExpensesForm(instance=expense)
 
-    return render(request,'expenses/add_expense.html',context)
+    context = {
+        'form' : form
+    }
+    
+    return render(request,'expenses/Edit_expense.html',context)
     
     
 
 @login_required(login_url='/authentication/login/')
 def delete_expense (request):
-    pass
+    pk = request.POST['pk']
+    expense = Expense.objects.get(id=pk)
+    if request.method == 'POST' :
+        expense.delete()
+        messages.error(request, 'Expense Succesfully Deleted')
+    return redirect ('/expenses/')
