@@ -48,7 +48,7 @@
                                     <td>{{ expense.category }}</td>
                                     <td>{{ expense.date |date:"m/d/Y" }}</td>
                                     <td>
-                                        <a href="/expenses/edit_expense/{{ expense.pk }}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
+                                        <a href="{% url 'edit_expense' expense.pk %}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
                                         <a class="btn btn-danger btn-xs" 
                                             data-pk="{{ expense.pk }}"
                                             data-amount="{{ expense.amount }}"
