@@ -8,7 +8,7 @@ class ExpensesForm (forms.ModelForm) :
         #fields = '__all__'
         exclude = ('owner',)
         widgets = {
-            'amount': forms.TextInput(attrs={'class':'form-control'}),
+            'amount': forms.TextInput(attrs={'class':'form-control','type':'number'}),
             'description': forms.TextInput(attrs={'class':'form-control'}),
             'category': forms.Select(attrs={'class':'custom-select rounded-0'}),
             'date': forms.TextInput(attrs={
