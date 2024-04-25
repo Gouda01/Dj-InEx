@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 from .models import Expense, Category
 from .forms import ExpensesForm
 
@@ -75,7 +78,7 @@ def add_expense (request):
             myform.owner = request.user
             myform.save()
             messages.success(request, 'Expense Succesfully Saved')
-            return redirect ('/expenses/')
+            return redirect ('expenses')
     else :
         form = ExpensesForm()
         
@@ -100,7 +103,7 @@ def edit_expense (request,pk):
             myform.owner = request.user
             myform.save()
             messages.success(request, 'Expense Succesfully Edited')
-            return redirect ('/expenses/')
+            return redirect ('expenses')
     else :
         form = ExpensesForm(instance=expense)
 
@@ -119,4 +122,16 @@ def delete_expense (request):
     if request.method == 'POST' :
         expense.delete()
         messages.error(request, 'Expense Succesfully Deleted')
-    return redirect ('/expenses/')
+    return redirect ('expenses')
+
+# @login_required(login_url='/authentication/login/')
+# def delete_expense (request):
+#     pk = request.POST['pk']
+#     expense = Expense.objects.get(id=pk)
+#     if request.method == 'POST' :
+#         expense.delete()
+#         messages.error(request, 'Expense Succesfully Deleted')
+    
+#     expenses = Expense.objects.all()
+#     page = render_to_string('expenses/includes/expenses-table.html', {'expenses':expenses })
+#     return JsonResponse({'result':page})
