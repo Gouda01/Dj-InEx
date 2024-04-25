@@ -11,7 +11,12 @@ from .forms import ExpensesForm
 @login_required(login_url='/authentication/login/')
 def index (request):
 
-    return render(request,'expenses/index.html',{})
+    expenses = Expense.objects.filter(owner=request.user)
+    context = {
+        'expenses' : expenses
+    }
+    
+    return render(request,'expenses/index.html',context)
 
 
 # @login_required(login_url='/authentication/login/')
@@ -86,4 +91,32 @@ def add_expense (request):
     
     
 
+@login_required(login_url='/authentication/login/')
+def edit_expense (request):
+
+    categories = Category.objects.all()
     
+
+    if request.method =='POST' :
+        form = ExpensesForm(request.POST)
+        if form.is_valid :
+            myform=form.save(commit=False)
+            myform.owner = request.user
+            myform.save()
+            return redirect ('/expenses/')
+    else :
+        form = ExpensesForm()
+        
+    context = {
+        'categories':categories,
+        'form':form,
+        'values' : request.POST,
+    }
+
+    return render(request,'expenses/add_expense.html',context)
+    
+    
+
+@login_required(login_url='/authentication/login/')
+def delete_expense (request):
+    pass
