@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from expenses.views import index
+from expenses.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('',index, name='home'),
+    path('',home, name='home'),
 
     path('authentication/', include('authentication.urls')),
     path('expenses/', include('expenses.urls')),

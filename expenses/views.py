@@ -1,25 +1,38 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from .models import Expense, Category
+from django.views.generic import ListView
+
+from .models import Expense
 from .forms import ExpensesForm
 
 
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
+class ExpenseList (ListView):
+    model = Expense
+    paginate_by = 5
+    template_name = 'expenses/index.html'
 
-@login_required(login_url='/authentication/login/')
-def index (request):
+# @login_required(login_url='/authentication/login/')
+# def index (request):
 
-    expenses = Expense.objects.filter(owner=request.user)
-    context = {
-        'expenses' : expenses
-    }
+#     expenses = Expense.objects.filter(owner=request.user)
+#     paginator = paginator(expenses,2)
+#     page_nu
+#     context = {
+#         'expenses' : expenses
+#     }
     
-    return render(request,'expenses/index.html',context)
+#     return render(request,'expenses/index.html',context)
+
+
+
 
 
 # @login_required(login_url='/authentication/login/')
@@ -135,3 +148,7 @@ def delete_expense (request):
 #     expenses = Expense.objects.all()
 #     page = render_to_string('expenses/includes/expenses-table.html', {'expenses':expenses })
 #     return JsonResponse({'result':page})
+
+@login_required(login_url='/authentication/login/')
+def home (request):
+    return render(request,'home.html')
