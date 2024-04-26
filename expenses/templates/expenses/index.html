@@ -26,81 +26,131 @@
                     </a>
                 </div>
 
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Amount</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>Date</th>
-                                    <th style="width: 8%"></th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                            
-                            {% for expense in object_list %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ expense.amount }}</td>
-                                    <td>{{ expense.description }}</td>
-                                    <td>{{ expense.category }}</td>
-                                    <td>{{ expense.date |date:"m/d/Y" }}</td>
-                                    <td>
-                                        <a href="{% url 'edit_expense' expense.pk %}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-danger btn-xs" 
-                                            data-pk="{{ expense.pk }}"
-                                            data-amount="{{ expense.amount }}"
-                                            data-category="{{ expense.category }}"
-                                            data-toggle="modal" 
-                                            data-target="#delete-expense"><i class="fas fa-trash"></i></a>
+                
+                <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Expenses List</h3>
+      
+                      <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" id="searchField" placeholder="Search">
+      
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        
+                        <div class="app-table">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th style="width: 8%"></th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for expense in object_list %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ expense.amount }}</td>
+                                            <td>{{ expense.description }}</td>
+                                            <td>{{ expense.category }}</td>
+                                            <td>{{ expense.date |date:"m/d/Y" }}</td>
+                                            <td>
+                                                <a href="{% url 'edit_expense' expense.pk %}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-xs" 
+                                                    data-pk="{{ expense.pk }}"
+                                                    data-amount="{{ expense.amount }}"
+                                                    data-category="{{ expense.category }}"
+                                                    data-toggle="modal" 
+                                                    data-target="#delete-expense"><i class="fas fa-trash"></i></a>
+                                                
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-output">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th style="width: 8%"></th>
+                                        </tr>
+                                </thead>
+                                <tbody class="output-table-body">
+                                    
+                                    
                                         
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
 
-                <div class="card-footer clearfix">
-                    {% if is_paginated %}
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                        {% endif %}
-                    
 
-                        {% for i in paginator.page_range %}
-                                             
-                            {% if page_obj.number == i %}
-                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
-                            {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
-                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        
+
+
+                    </div>
+        
+                    <div class="card-footer clearfix paginate-content">
+                        {% if is_paginated %}
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">Previous</a>
+                                </li>
                             {% endif %}
                         
-                        {% endfor %}
-                        
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        {% endif %}
+    
+                            {% for i in paginator.page_range %}
+                                                    
+                                {% if page_obj.number == i %}
+                                    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
                             
-                        
-                    </ul>
-                    {% endif %}
+                            {% endfor %}
+                            
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            {% endif %}
+                                
+                            
+                        </ul>
+                        {% endif %}
+                    </div>
                 </div>
+                <!-- /.card-body -->
+
             </div>
             <!-- /.card -->
 
@@ -157,6 +207,10 @@
     })
 
 </script>
+
+<script src="{% static 'custom/searchExpense.js' %}"></script>
+
+
 
     
 {% endblock js %}

@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+import json
 
 from django.views.generic import ListView
 
@@ -152,3 +153,19 @@ def delete_expense (request):
 @login_required(login_url='/authentication/login/')
 def home (request):
     return render(request,'home.html')
+
+
+
+# @login_required(login_url='/authentication/login/')
+def search_expenses(request):
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchText')
+
+        expenses = Expense.objects.filter(
+            amount__istartswith=search_str,owner=request.user) | Expense.objects.filter(
+            date__istartswith=search_str,owner=request.user) | Expense.objects.filter(
+            description__icontains=search_str,owner=request.user) | Expense.objects.filter(
+            category__name__icontains=search_str,owner=request.user)
+        
+        data = expenses.values()
+        return JsonResponse(list(data), safe=False)
