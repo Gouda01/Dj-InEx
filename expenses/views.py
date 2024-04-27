@@ -18,7 +18,7 @@ from .forms import ExpensesForm
 class ExpenseList (ListView):
     model = Expense
     paginate_by = 5
-    template_name = 'expenses/index.html'
+    template_name = 'expenses/index1.html'
 
 # @login_required(login_url='/authentication/login/')
 # def index (request):
