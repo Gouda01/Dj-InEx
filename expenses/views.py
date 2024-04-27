@@ -17,7 +17,7 @@ from .forms import ExpensesForm
 @method_decorator(login_required, name='dispatch')
 class ExpenseList (ListView):
     model = Expense
-    paginate_by = 5
+    # paginate_by = 5
     template_name = 'expenses/index1.html'
 
 # @login_required(login_url='/authentication/login/')
