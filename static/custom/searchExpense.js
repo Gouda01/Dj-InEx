@@ -28,12 +28,12 @@ searchField.addEventListener("keyup", (e) => {
                 tableOutput.innerHTML = "No results found"
             }else {
                     const i = 1;
-                    data.forEach((item) =>
+                    data.forEach((item,index) =>
                     tbodyOutput.innerHTML += `
                      <tr>
-                        <td>${i}</td>
+                        <td>${index+1}</td>
                         <td>${item.amount}</td>
-                        <td>${item.category}</td>
+                        <td>${item.category.name}</td>
                         <td>${item.description}</td>
                         <td>${item.date}</td>
                         <td></td>

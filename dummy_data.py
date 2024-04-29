@@ -39,5 +39,5 @@ def seed_expenses(n):
 
 
 
-# seed_categories(7)
-seed_expenses(200)
+# seed_categories(5)
+seed_expenses(500)

@@ -3,3 +3,7 @@
 .table td, .table th {
     padding: .50rem;
 }
+
+.table thead th {
+    vertical-align: middle !important;
+}

@@ -11,21 +11,35 @@ from django.views.generic import ListView
 
 from .models import Expense
 from .forms import ExpensesForm
+from userpreferences.models import UserPreferences
 
 
 # Create your views here.
+
+# Simple Table with pagination :
 @method_decorator(login_required, name='dispatch')
 class ExpenseList (ListView):
     model = Expense
-    # paginate_by = 5
-    template_name = 'expenses/index1.html'
+    paginate_by = 10
+    template_name = 'expenses/index.html'
+
+
+
+# DataTable :
+# @login_required(login_url='/authentication/login/')
+# def expense_list(_request):
+#     expenses = Expense.objects.all()
+#     data = expenses.values()
+#     return JsonResponse(list(data), safe=False)
+    # return render(request,'expenses/index1.html',context)
+
+
 
 # @login_required(login_url='/authentication/login/')
 # def index (request):
 
 #     expenses = Expense.objects.filter(owner=request.user)
 #     paginator = paginator(expenses,2)
-#     page_nu
 #     context = {
 #         'expenses' : expenses
 #     }

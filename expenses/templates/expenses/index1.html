@@ -48,26 +48,8 @@
                                     <th style="width: 8%"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {% for expense in object_list %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ expense.amount }}</td>
-                                        <td>{{ expense.description }}</td>
-                                        <td>{{ expense.category }}</td>
-                                        <td>{{ expense.date |date:"d/m/Y" }}</td>
-                                        <td>
-                                            <a href="{% url 'edit_expense' expense.pk %}" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-xs" 
-                                                data-pk="{{ expense.pk }}"
-                                                data-amount="{{ expense.amount }}"
-                                                data-category="{{ expense.category }}"
-                                                data-toggle="modal" 
-                                                data-target="#delete-expense"><i class="fas fa-trash"></i></a>
-                                            
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tbody id="tableBody_expenses">
+                                
                             </tbody>
                         </table>
 
@@ -133,7 +115,10 @@
 
 
 
+
 <!-- DataTables  & Plugins -->
+<script src="{% static 'custom/js/expenses_datatable.js' %}"></script>
+
 <script src="{% static 'en/' %}plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="{% static 'en/' %}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="{% static 'en/' %}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -148,24 +133,6 @@
 <script src="{% static 'en/' %}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 
-
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
-</script>
 
     
 {% endblock js %}
